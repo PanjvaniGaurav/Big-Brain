@@ -1,6 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
-import { SignInButton, UserButton } from "@clerk/nextjs";
 import {
   Authenticated,
   Unauthenticated,
@@ -14,24 +14,17 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Unauthenticated>
-        <SignInButton />
-      </Unauthenticated>
-      <Authenticated>
-        <UserButton />
+      <Button
+        onClick={() => {
+          createDocument({ title: "Hello world" });
+        }}
+      >
+        click me
+      </Button>
 
-        <button
-          onClick={() => {
-            createDocument({ title: "Hello world" });
-          }}
-        >
-          click me
-        </button>
-
-        {documents?.map((doc) => {
-          return <div key={doc._id}>{doc.title}</div>;
-        })}
-      </Authenticated>
+      {documents?.map((doc) => {
+        return <div key={doc._id}>{doc.title}</div>;
+      })}
     </main>
   );
 }
