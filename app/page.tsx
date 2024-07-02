@@ -1,30 +1,23 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import CreateDocumentButton from "@/components/CreateDocumentButton";
+import DocumentCard from "@/components/DocumentCard";
 import { api } from "@/convex/_generated/api";
-import {
-  Authenticated,
-  Unauthenticated,
-  useMutation,
-  useQuery,
-} from "convex/react";
+import { useQuery } from "convex/react";
 
 export default function Home() {
   const documents = useQuery(api.documents.getDocuments);
-  const createDocument = useMutation(api.documents.createDocument);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button
-        onClick={() => {
-          createDocument({ title: "Hello world" });
-        }}
-      >
-        click me
-      </Button>
-
-      {documents?.map((doc) => {
-        return <div key={doc._id}>{doc.title}</div>;
-      })}
+    <main className="p-24">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-bold">My Documents</h1>
+        <CreateDocumentButton />
+      </div>
+      <div className="grid grid-cols-4 gap-8">
+        {documents?.map((doc) => {
+          return <DocumentCard key={doc._id} document={doc} />;
+        })}
+      </div>
     </main>
   );
 }
