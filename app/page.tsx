@@ -1,5 +1,5 @@
 "use client";
-import CreateDocumentButton from "@/components/CreateDocumentButton";
+import UploadDocumentButton from "@/components/UploadDocumentButton";
 import DocumentCard from "@/components/DocumentCard";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
@@ -11,7 +11,7 @@ export default function Home() {
     <main className="p-24">
       <div className="flex justify-between items-center mb-10">
         <h1 className="text-4xl font-bold">My Documents</h1>
-        <CreateDocumentButton />
+        <UploadDocumentButton />
       </div>
       <div className="grid grid-cols-4 gap-8">
         {documents?.map((doc) => {

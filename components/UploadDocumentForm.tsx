@@ -3,7 +3,6 @@
 import { infer, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import {
@@ -15,14 +14,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
 import LoadingButton from "./LoadingButton";
+import { Id } from "@/convex/_generated/dataModel";
 
 const formSchema = z.object({
   title: z.string().min(1).max(250),
+  file: z.instanceof(File),
 });
 
 const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
+  const createDocument = useMutation(api.documents.createDocument);
+  const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,12 +34,19 @@ const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    await createDocument(values);
+    const url = await generateUploadUrl();
+    const result = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": values.file.type },
+      body: values.file,
+    });
+    const { storageId } = await result.json();
+    await createDocument({
+      title: values.title,
+      storageId : storageId as Id<"_storage">,
+    });
     onUpload();
   }
-
-  const createDocument = useMutation(api.documents.createDocument);
 
   return (
     <div>
@@ -50,6 +60,27 @@ const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
                 <FormLabel>Expense Report</FormLabel>
                 <FormControl>
                   <Input placeholder="Expense Report" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="file"
+            control={form.control}
+            render={({ field: { value, onChange, ...fieldProps } }) => (
+              <FormItem>
+                <FormLabel>File</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept=".xml,.txt"
+                    {...fieldProps}
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      onChange(file);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
