@@ -3,6 +3,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import React from "react";
+import ChatPanel from "./ChatPanel";
 
 const page = ({
   params,
@@ -20,7 +21,7 @@ const page = ({
       <div className="flex justify-between items-center mb-10">
         <h1 className="text-4xl font-bold">{document.title}</h1>
       </div>
-      <div className="flex gap-10 h-[600px]">
+      <div className="flex gap-10 h-[400px]">
         <div className="bg-gray-800 p-4 rounded-lg flex-1">
           {document.documentUrl && (
             <iframe
@@ -29,7 +30,7 @@ const page = ({
             />
           )}
         </div>
-        <div className="bg-gray-800 p-4 w-[300px] rounded-lg"></div>
+        <ChatPanel documentId={document._id}/>
       </div>
     </div>
   );
