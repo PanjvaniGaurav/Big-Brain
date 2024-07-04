@@ -1,12 +1,42 @@
-import { action, mutation, query } from "./_generated/server";
+import {
+  MutationCtx,
+  QueryCtx,
+  action,
+  internalQuery,
+  mutation,
+  query,
+} from "./_generated/server";
 import { ConvexError, v } from "convex/values";
-import { api } from "./_generated/api";
+import { api, internal } from "./_generated/api";
 import { chatSession } from "../helper/geminiCall";
 import { Id } from "./_generated/dataModel";
 
 export const generateUploadUrl = mutation(async (ctx) => {
   return await ctx.storage.generateUploadUrl();
 });
+
+
+export async function hasAccess(
+  ctx: MutationCtx | QueryCtx,
+  documentId: Id<"documents">
+) {
+  const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
+
+  if (!userId) {
+    return null;
+  }
+
+  const document = await ctx.db.get(documentId);
+  if (!document) {
+    return null;
+  }
+
+  if (document.tokenIdentifier !== userId) {
+    return null;
+  }
+  
+  return {document,userId};
+}
 
 export const getDocuments = query({
   handler: async (ctx) => {
@@ -22,29 +52,19 @@ export const getDocuments = query({
   },
 });
 
+
 export const getDocument = query({
   args: {
     documentId: v.id("documents"),
   },
   handler: async (ctx, args) => {
-    const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
-
-    if (!userId) {
+    const accessObj = await hasAccess(ctx, args.documentId);
+    if (!accessObj) {
       return null;
     }
-
-    const document = await ctx.db.get(args.documentId);
-    if (!document) {
-      return null;
-    }
-
-    if (document.tokenIdentifier !== userId) {
-      return null;
-    }
-
     return {
-      ...document,
-      documentUrl: await ctx.storage.getUrl(document.storageId),
+      ...accessObj.document,
+      documentUrl: await ctx.storage.getUrl(accessObj.document.storageId),
     };
   },
 });
@@ -69,27 +89,34 @@ export const createDocument = mutation({
   },
 });
 
+export const hasAccessToDocumentQuery = internalQuery({
+  args: {
+    documentId: v.id("documents"),
+  },
+  async handler(ctx, args) {
+    return await hasAccess(ctx, args.documentId);
+  },
+});
+
 export const askQuestion = action({
   args: {
     question: v.string(),
     documentId: v.id("documents"),
   },
   async handler(ctx, args) {
-    const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
-    if (!userId) {
-      throw new ConvexError("Not authenticated");
-    }
-    const document = await ctx.runQuery(api.documents.getDocument, {
+    const accessObj = await ctx.runQuery(internal.documents.hasAccessToDocumentQuery,{
       documentId: args.documentId,
     });
-    if (!document) {
-      throw new ConvexError("Document not found");
+
+    if (!accessObj) {
+      throw new ConvexError("You do not have access to document");
     }
 
-    const file = await ctx.storage.get(document.storageId);
+    const file = await ctx.storage.get(accessObj.document.storageId);
     if (!file) {
       throw new ConvexError("File not found");
     }
+    
     const textFile = await file.text();
     const prompt = `This is the text of the document: ${textFile}
                     and i want you to answer the following question about the document
@@ -97,8 +124,24 @@ export const askQuestion = action({
                     just answer the question directly as if you are answering a question in a conversation.
                     Understand the context of the file and answer the question.`;
     const response = (await chatSession.sendMessage(prompt)) as any;
-    const text = response.response.candidates[0].content.parts[0].text;
-    console.log(text);
+    const text =
+      response.response.candidates[0].content.parts[0].text ??
+      "Sorry, I am not able to answer this question";
+
+    await ctx.runMutation(internal.chats.createChatRecord, {
+      documentId: args.documentId,
+      text: args.question,
+      isHuman: true,
+      tokenIdentifier: accessObj.userId,
+    });
+
+    await ctx.runMutation(internal.chats.createChatRecord, {
+      documentId: args.documentId,
+      text,
+      isHuman: false,
+      tokenIdentifier: accessObj.userId,
+    });
+
     return text;
   },
 });

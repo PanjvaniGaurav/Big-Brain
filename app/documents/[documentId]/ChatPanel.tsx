@@ -1,54 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useAction } from "convex/react";
+import { cn } from "@/lib/utils";
+import { useAction, useQuery } from "convex/react";
 import React from "react";
+import QuestionForm from "./QuestionForm";
 
 const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
-  const askQuestion = useAction(api.documents.askQuestion);
+  const chats = useQuery(api.chats.getChatForDocument, { documentId });
 
   return (
-    <div className="bg-gray-800 p-4 w-[300px] flex flex-col gap-2 rounded-lg justify-between">
-      <div className="overflow-auto m-2">
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
-        <div>hello</div>
+    <div className="w-full h-full flex flex-col gap-2 p-4 bg-gray-900 rounded-lg mb-2">
+      <div className="flex-1 overflow-auto space-y-2">
+        <div className="bg-slate-950 rounded p-2">
+          AI: Ask any Question using AI about the document below
+        </div>
+        {chats?.map((chat) => (
+          <div
+            className={cn(
+              {
+                "bg-slate-800": chat.isHuman,
+                "bg-slate-950": !chat.isHuman,
+                "text-right": chat.isHuman,
+              },
+              "rounded-md whitespace-pre-line p-2 space-y-4"
+            )}
+          >
+            {chat.isHuman ? "You" : "AI"}: {chat.text}
+          </div>
+        ))}
       </div>
-      <div>
-        <form
-          className="flex gap-2"
-          onSubmit={async (event) => {
-            event.preventDefault();
-            const form = event.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const text = formData.get("text") as string;
-            const response = await askQuestion({ question: text, documentId })
-            console.log(response)
-          }}
-        >
-          <Input required name="text" />
-          <Button>Submit</Button>
-        </form>
-      </div>
+      <QuestionForm documentId={documentId} />
     </div>
   );
 };
