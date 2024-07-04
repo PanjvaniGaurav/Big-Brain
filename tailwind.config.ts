@@ -1,15 +1,13 @@
 import type { Config } from "tailwindcss"
-const { fontFamily } = require("tailwindcss/defaultTheme")
 
-
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -20,8 +18,44 @@ const config = {
       },
     },
     extend: {
+      typography: {
+        invert: {
+          css: {
+            '--tw-prose-body': 'var(--tw-colors-gray-200)',
+            '--tw-prose-headings': 'var(--tw-colors-white)',
+            '--tw-prose-links': 'var(--tw-colors-blue-400)',
+            '--tw-prose-bold': 'var(--tw-colors-white)',
+            '--tw-prose-counters': 'var(--tw-colors-gray-400)',
+            '--tw-prose-bullets': 'var(--tw-colors-gray-600)',
+            '--tw-prose-hr': 'var(--tw-colors-gray-700)',
+            '--tw-prose-quote-borders': 'var(--tw-colors-gray-600)',
+            '--tw-prose-captions': 'var(--tw-colors-gray-400)',
+            '--tw-prose-code': 'var(--tw-colors-white)',
+            '--tw-prose-pre-code': 'var(--tw-colors-gray-200)',
+            '--tw-prose-pre-bg': 'var(--tw-colors-gray-800)',
+            '--tw-prose-th-borders': 'var(--tw-colors-gray-600)',
+            '--tw-prose-td-borders': 'var(--tw-colors-gray-700)',
+          },
+        },
+      },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: [
+          "var(--font-sans)",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "Noto Sans",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji"
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -79,7 +113,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
+} 
 
 export default config
