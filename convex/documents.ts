@@ -2,6 +2,8 @@ import {
   MutationCtx,
   QueryCtx,
   action,
+  internalAction,
+  internalMutation,
   internalQuery,
   mutation,
   query,
@@ -43,7 +45,7 @@ export const getDocuments = query({
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
 
     if (!userId) {
-      return [];
+      return undefined;
     }
     return await ctx.db
       .query("documents")
@@ -81,9 +83,15 @@ export const createDocument = mutation({
       throw new ConvexError("Not authenticated");
     }
 
-    await ctx.db.insert("documents", {
+    const documentId = await ctx.db.insert("documents", {
       title: args.title,
+      description: "",
       tokenIdentifier: userId,
+      storageId: args.storageId,
+    });
+
+    await ctx.scheduler.runAfter(0,internal.documents.generateDocumentDescription,{
+      documentId: documentId,
       storageId: args.storageId,
     });
   },
@@ -97,6 +105,47 @@ export const hasAccessToDocumentQuery = internalQuery({
     return await hasAccess(ctx, args.documentId);
   },
 });
+
+export const generateDocumentDescription = internalAction({
+  args: {
+    documentId: v.id("documents"),
+    storageId: v.id("_storage")
+  },
+  async handler(ctx, args) {
+    const file = await ctx.storage.get(args.storageId);
+    if (!file) {
+      throw new ConvexError("File not found");
+    }
+    
+    const textFile = await file.text();
+    const prompt = `This is the text of the document: ${textFile}
+                    and i want you to generate a description for this document.
+                    the description should be precise and not more than 200 characters.`;
+    const response = (await chatSession.sendMessage(prompt)) as any;
+    const text =
+      response.response.candidates[0].content.parts[0].text ??
+      "Couldn't generate description for this document";
+
+    await ctx.runMutation(internal.documents.updateDocumentDescription, {
+      documentId: args.documentId,
+      description:text
+    });
+
+    return text;
+  },
+});
+
+export const updateDocumentDescription = internalMutation({
+  args:{
+    documentId: v.id("documents"),
+    description: v.string(),
+  },
+  async handler(ctx,args){
+    await ctx.db.patch(args.documentId,{
+      description: args.description,
+    });
+  }
+})
 
 export const askQuestion = action({
   args: {

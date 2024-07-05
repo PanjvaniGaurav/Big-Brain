@@ -2,6 +2,7 @@
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { AuthLoading, Authenticated, Unauthenticated } from "convex/react";
 import React from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const HeaderActions = () => {
   return (
@@ -10,12 +11,14 @@ const HeaderActions = () => {
         <SignInButton />
       </Unauthenticated>
       <Authenticated>
-        <div className="text-4xl">
-        <UserButton />
+        <div className="flex">
+          <UserButton />
         </div>
       </Authenticated>
       <AuthLoading>
-        <div>Loading...</div>
+        <div>
+          <Skeleton className="rounded-full w-[45px] h-[45px] bg-slate-600" />
+        </div>
       </AuthLoading>
     </div>
   );

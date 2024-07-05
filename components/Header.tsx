@@ -8,13 +8,20 @@ const Header = () => {
   return (
     <div className="bg-slate-800 py-2">
       <div className="mx-auto flex justify-between items-center">
-        <Link href="/">
-          <div className="flex gap-2 items-center text-3xl font-semibold">
-            <Image src="/logo.png" width={65} height={65} alt="logo" />
-            Big Brain
+        <div className="flex items-center gap-10">
+          <Link href="/">
+            <div className="flex gap-2 items-center text-3xl font-semibold">
+              <Image src="/logo.png" width={65} height={65} alt="logo" />
+              Big Brain
+            </div>
+          </Link>
+          <div className="text-md hover:text-slate-400">
+            <Link href="/">
+            Documents
+            </Link>
           </div>
-        </Link>
-        <div className="flex gap-3 mr-1 items-center">
+        </div>
+        <div className="flex gap-3 mr-3 items-center justify-center ">
           <ModeToggle />
           <HeaderActions />
         </div>
