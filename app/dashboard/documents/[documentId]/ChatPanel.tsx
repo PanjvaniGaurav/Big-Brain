@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useQuery } from "convex/react";
 import React from "react";
 import QuestionForm from "./QuestionForm";
-import FormattedAIResponse from "../../../components/FormattedAIResponse";
+import FormattedAIResponse from "../../../../components/FormattedAIResponse";
 
 const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
   const chats = useQuery(api.chats.getChatForDocument, { documentId });

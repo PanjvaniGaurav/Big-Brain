@@ -16,7 +16,7 @@ const Header = () => {
             </div>
           </Link>
           <div className="text-md hover:text-slate-400">
-            <Link href="/">
+            <Link href="/dashboard">
             Documents
             </Link>
           </div>

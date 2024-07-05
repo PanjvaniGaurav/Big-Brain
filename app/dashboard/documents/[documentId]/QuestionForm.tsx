@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import LoadingButton from "../../../components/LoadingButton";
+import LoadingButton from "../../../../components/LoadingButton";
 
 const formSchema = z.object({
   text: z.string().min(1).max(250),
@@ -32,20 +32,26 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await askQuestion({ question: values.text, documentId });
-    form.reset()
+    form.reset();
   }
 
   return (
     <div className="mb-10 w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex gap-3">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex gap-3"
+        >
           <FormField
             name="text"
             control={form.control}
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormControl >
-                  <Input placeholder="Ask any question about your document" {...field} />
+                <FormControl>
+                  <Input
+                    placeholder="Ask any question about your document"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

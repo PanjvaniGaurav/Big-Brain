@@ -38,7 +38,7 @@ const DocumentCard = ({ document }: { document: Doc<"documents"> }) => {
             className={ButtonStyles}
             variant="secondary"
           >
-            <Link href={`/documents/${document._id}`}>
+            <Link href={`/dashboard/documents/${document._id}`}>
               <Eye className={IconsStyles} />
               View
             </Link>

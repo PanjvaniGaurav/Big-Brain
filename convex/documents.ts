@@ -78,7 +78,6 @@ export const createDocument = mutation({
   },
   handler: async (ctx, args) => {
     const userId = (await ctx.auth.getUserIdentity())?.tokenIdentifier;
-    console.log(userId);
     if (!userId) {
       throw new ConvexError("Not authenticated");
     }
