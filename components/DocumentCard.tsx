@@ -10,6 +10,7 @@ import { Doc } from "@/convex/_generated/dataModel";
 import { Button } from "./ui/button";
 import { Eye, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { ButtonStyles, IconsStyles } from "@/styles/styles";
 
 const DocumentCard = ({ document }: { document: Doc<"documents"> }) => {
   return (
@@ -34,11 +35,11 @@ const DocumentCard = ({ document }: { document: Doc<"documents"> }) => {
         <CardFooter>
           <Button
             asChild
-            className="flex items-center gap-2"
+            className={ButtonStyles}
             variant="secondary"
           >
             <Link href={`/documents/${document._id}`}>
-              <Eye className="w-4 h-4" />
+              <Eye className={IconsStyles} />
               View
             </Link>
           </Button>

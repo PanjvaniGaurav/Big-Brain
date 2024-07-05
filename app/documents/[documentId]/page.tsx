@@ -6,6 +6,7 @@ import React from "react";
 import ChatPanel from "./ChatPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import DeleteDocumentButton from "@/components/DeleteDocumentButton";
 
 const Page = ({
   params,
@@ -36,8 +37,9 @@ const Page = ({
       )}
       {document && (
         <>
-          <header className="bg-gray-900 p-4 pl-8 pt-5">
-            <h1 className="text-2xl font-bold text-white">{document.title}</h1>
+          <header className="bg-gray-900 p-4 pl-8 pt-5 flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-white">{document.title}</h1>
+            <DeleteDocumentButton documentId={document._id}/>
           </header>
           <main className="flex-grow flex flex-col overflow-hidden p-6 ml-4">
             <Tabs defaultValue="document" className="w-full h-full">

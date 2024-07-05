@@ -194,3 +194,19 @@ export const askQuestion = action({
     return text;
   },
 });
+
+
+export const deleteDocument = mutation({
+  args:{
+    documentId: v.id("documents"),
+  },
+  async handler(ctx,args){
+    const accessObj = await hasAccess(ctx,args.documentId);
+
+    if (!accessObj) {
+      throw new ConvexError("You do not have access to document");
+    }
+    await ctx.storage.delete(accessObj.document.storageId)
+    await ctx.db.delete(args.documentId);
+  }
+})
