@@ -20,9 +20,8 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
         <CreateNoteButton />
       </div>
 
-      {
-        !notes && (
-          <div className="flex gap-20">
+      {!notes && (
+        <div className="flex gap-20">
           <div className="w-[200px] space-y-4">
             <Skeleton className="h-[20px] w-full" />
             <Skeleton className="h-[20px] w-full" />
@@ -36,8 +35,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
             <Skeleton className="h-[400px] w-full" />
           </div>
         </div>
-        )
-      }
+      )}
 
       {notes?.length === 0 && (
         <div className="flex flex-col justify-center items-center">
@@ -51,23 +49,26 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
           <CreateNoteButton />
         </div>
       )}
-      <div className="flex gap-20 ">
-        <ul className="space-y-2 w-[20%]">
-          {notes?.map((note) => (
-            <li
-              key={note._id}
-              className={cn("text-bold hover:text-slate-300", {
-                "text-blue-200": note._id === noteId,
-              })}
-            >
-              <Link href={`/dashboard/notes/${note._id}`}>
-                {note.title.substring(0, 20) + "..."}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="w-full">{children}</div>
-      </div>
+
+      {notes && notes.length > 0 && (
+        <div className="flex gap-20 ">
+          <ul className="space-y-2 w-[20%]">
+            {notes?.map((note) => (
+              <li
+                key={note._id}
+                className={cn("text-bold hover:text-slate-300", {
+                  "text-blue-200": note._id === noteId,
+                })}
+              >
+                <Link href={`/dashboard/notes/${note._id}`}>
+                  {note.title.substring(0, 20) + "..."}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="w-full">{children}</div>
+        </div>
+      )}
     </main>
   );
 };

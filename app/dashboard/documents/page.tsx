@@ -12,7 +12,7 @@ export default function Home() {
   const documents = useQuery(api.documents.getDocuments);
 
   return (
-    <main className="w-full space-y-8">
+    <div className="w-full space-y-8">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">My Documents</h1>
         <UploadDocumentButton />
@@ -49,6 +49,6 @@ export default function Home() {
           {documents?.map((doc) => <DocumentCard document={doc} />)}
         </div>
       )}
-    </main>
+    </div>
   );
 }

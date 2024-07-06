@@ -20,7 +20,7 @@ const Page = ({
   });
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden mb-6">
+    <div className="flex flex-col w-full mb-6">
       {!document && (
         <div className="p-4 flex flex-col gap-3 ">
           <div>
@@ -31,15 +31,15 @@ const Page = ({
             <Skeleton className="h-[40px] w-[100px] rounded" />
           </div>
           <div className="ml-4">
-            <Skeleton className="h-[500px] w-full rounded-lg" />
+            <Skeleton className="h-[200px] w-full rounded-lg" />
           </div>
         </div>
       )}
       {document && (
-        <>
-          <header className="bg-gray-900 p-4 pl-8 pt-5 flex justify-between items-center">
+        <div>
+          <header className=" p-4 pl-8 pt-5 flex justify-between items-center">
             <h1 className="text-3xl font-bold text-white">{document.title}</h1>
-            <DeleteDocumentButton documentId={document._id}/>
+            <DeleteDocumentButton documentId={document._id} />
           </header>
           <main className="flex-grow flex flex-col overflow-hidden p-6 ml-4">
             <Tabs defaultValue="document" className="w-full h-full">
@@ -47,8 +47,11 @@ const Page = ({
                 <TabsTrigger value="document">Document</TabsTrigger>
                 <TabsTrigger value="chat">Chat</TabsTrigger>
               </TabsList>
-              <TabsContent value="document" className="h-full overflow-hidden">
-                <div className="bg-gray-800 p-4 rounded-lg h-full">
+              <TabsContent
+                value="document"
+                className="h-[calc(100vh-310px)] overflow-hidden"
+              >
+                <div className="bg-gray-800 p-4 rounded-lg h-full overflow-auto">
                   {document.documentUrl && (
                     <iframe
                       className="w-full h-full"
@@ -57,12 +60,12 @@ const Page = ({
                   )}
                 </div>
               </TabsContent>
-              <TabsContent value="chat" className="h-full overflow-hidden">
+              <TabsContent value="chat" className="h-[calc(100vh-310px)] overflow-auto">
                 <ChatPanel documentId={document._id} />
               </TabsContent>
             </Tabs>
           </main>
-        </>
+        </div>
       )}
     </div>
   );

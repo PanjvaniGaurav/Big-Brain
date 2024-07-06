@@ -10,8 +10,8 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
   const chats = useQuery(api.chats.getChatForDocument, { documentId });
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 p-4 bg-gray-900 rounded-lg mb-2">
-      <div className="flex-1 overflow-auto space-y-4">
+    <div className="w-full flex flex-col gap-2 p-4 h-[calc(100vh-320px)] bg-gray-900 rounded-lg mb-2 relative overflow-hidden">
+      <div className="overflow-auto flex-1 space-y-4 pb-14"> {/* Add pb-20 for padding bottom */}
         <div className="bg-slate-950 rounded p-3 text-gray-300">
           AI: Ask any question about the document below
         </div>
@@ -36,7 +36,9 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
           </div>
         ))}
       </div>
-      <QuestionForm documentId={documentId} />
+      <div className="absolute -bottom-8 left-0 right-0 bg-gray-900 px-2 overflow-hidden"> {/* Change -bottom-8 to bottom-0 */}
+        <QuestionForm documentId={documentId} />
+      </div>
     </div>
   );
 };
