@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  text: z.string().min(1).max(2500),
+  text: z.string().min(1).max(5000),
   title: z.string().min(1).max(30),
 });
 

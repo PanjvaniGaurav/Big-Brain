@@ -30,7 +30,7 @@ const page = () => {
             <DeleteNoteButton noteId={noteId} />
           </div>
           <Separator className="my-1"/>
-          <div className="mt-2">{note?.text}</div>
+          <div className="mt-2 whitespace-pre-line">{note?.text}</div>
         </div>
       )}
     </div>

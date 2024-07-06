@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ClipboardPen, Cog, FilesIcon } from "lucide-react";
+import { ClipboardPen, Cog, FilesIcon, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,6 +16,20 @@ export default function SideNav() {
             className={cn(
               "font-light flex gap-2 items-center text-xl hover:text-blue-100",
               {
+                "text-blue-300": pathname.includes("/search"),
+              }
+            )}
+            href="/dashboard/search"
+          >
+            <Search />
+            Search
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={cn(
+              "font-light flex gap-2 items-center text-xl hover:text-blue-100",
+              {
                 "text-blue-300": pathname.includes("/documents"),
               }
             )}
@@ -25,6 +39,7 @@ export default function SideNav() {
             Documents
           </Link>
         </li>
+
         <li>
           <Link
             className={cn(

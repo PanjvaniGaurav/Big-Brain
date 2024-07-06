@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const NotesLayout = ({ children }: { children: ReactNode }) => {
   const notes = useQuery(api.notes.getNotes);
@@ -18,6 +19,25 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
         <h1 className="text-4xl font-bold">Notes</h1>
         <CreateNoteButton />
       </div>
+
+      {
+        !notes && (
+          <div className="flex gap-20">
+          <div className="w-[200px] space-y-4">
+            <Skeleton className="h-[20px] w-full" />
+            <Skeleton className="h-[20px] w-full" />
+            <Skeleton className="h-[20px] w-full" />
+            <Skeleton className="h-[20px] w-full" />
+            <Skeleton className="h-[20px] w-full" />
+            <Skeleton className="h-[20px] w-full" />
+          </div>
+
+          <div className="flex-1">
+            <Skeleton className="h-[400px] w-full" />
+          </div>
+        </div>
+        )
+      }
 
       {notes?.length === 0 && (
         <div className="flex flex-col justify-center items-center">
