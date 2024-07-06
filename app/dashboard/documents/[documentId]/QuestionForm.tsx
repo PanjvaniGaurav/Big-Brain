@@ -12,7 +12,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import LoadingButton from "../../../../components/LoadingButton";
@@ -36,7 +35,7 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
   }
 
   return (
-    <div className="mb-10 w-full">
+    <div className="w-full px-2 py-2 bg-gray-900">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

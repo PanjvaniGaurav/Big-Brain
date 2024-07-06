@@ -36,7 +36,7 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
           </div>
         ))}
       </div>
-      <div className="absolute -bottom-8 left-0 right-0 bg-gray-900 px-2 overflow-hidden"> {/* Change -bottom-8 to bottom-0 */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gray-900 px-2"> {/* Change -bottom-9 to bottom-0 */}
         <QuestionForm documentId={documentId} />
       </div>
     </div>
