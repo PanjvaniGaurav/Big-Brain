@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import HeaderActions from "./HeadeArctions";
 import Link from "next/link";
+import { OrganizationSwitcher } from "@clerk/nextjs";
 
 const Header = () => {
   return (
@@ -13,11 +14,12 @@ const Header = () => {
             <div className="flex gap-2 items-center text-3xl font-semibold">
               <Image src="/logo.png" width={65} height={65} alt="logo" />
               Big Brain
+            <OrganizationSwitcher />
             </div>
           </Link>
           <div className="text-md hover:text-slate-400">
             <Link href="/dashboard">
-            Documents
+            Dashboard
             </Link>
           </div>
         </div>

@@ -9,9 +9,12 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useOrganization } from "@clerk/nextjs";
 
 const NotesLayout = ({ children }: { children: ReactNode }) => {
-  const notes = useQuery(api.notes.getNotes);
+  const organization = useOrganization();
+  const orgId = organization.organization?.id;
+  const notes = useQuery(api.notes.getNotes,{orgId});
   const { noteId } = useParams<{ noteId: Id<"notes"> }>();
   return (
     <main className="w-full space-y-8">

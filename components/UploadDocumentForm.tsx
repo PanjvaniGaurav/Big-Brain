@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "./LoadingButton";
 import { Id } from "@/convex/_generated/dataModel";
+import { useOrganization } from "@clerk/nextjs";
 
 const formSchema = z.object({
   title: z.string().min(1).max(250),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
+  const organization = useOrganization();
   const createDocument = useMutation(api.documents.createDocument);
   const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
 
@@ -44,6 +46,7 @@ const UploadDocumentForm = ({ onUpload }: { onUpload: () => void }) => {
     await createDocument({
       title: values.title,
       storageId : storageId as Id<"_storage">,
+      orgId: organization.organization?.id,
     });
     onUpload();
   }

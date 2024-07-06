@@ -16,6 +16,7 @@ import {
 import LoadingButton from "../../../components/LoadingButton";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { useOrganization } from "@clerk/nextjs";
 
 const formSchema = z.object({
   text: z.string().min(1).max(5000),
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 const CreateNoteForm = ({ onNoteCreated }: { onNoteCreated: () => void }) => {
   const createNote = useMutation(api.notes.createNotes);
+  const organization = useOrganization();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,7 +38,8 @@ const CreateNoteForm = ({ onNoteCreated }: { onNoteCreated: () => void }) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
  await createNote({
       text: values.text,
-      title:values.title
+      title:values.title,
+      orgId: organization.organization?.id,
     });
     
     onNoteCreated();
