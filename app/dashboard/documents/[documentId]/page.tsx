@@ -20,38 +20,28 @@ const Page = ({
   });
 
   return (
-    <div className="flex flex-col w-full mb-6">
+    <div className="flex flex-col w-full sm:h-full lg:h-[calc(100vh-90px)] overflow-hidden">
       {!document && (
-        <div className="p-4 flex flex-col gap-3 ">
-          <div>
-            <Skeleton className="h-[50px] w-full rounded mb-3" />
-          </div>
-          <div className="flex gap-2 ml-4">
-            <Skeleton className="h-[40px] w-[100px] rounded" />
-            <Skeleton className="h-[40px] w-[100px] rounded" />
-          </div>
-          <div className="ml-4">
-            <Skeleton className="h-[400px] w-full rounded-lg" />
-          </div>
+        <div className="p-4 flex flex-col gap-3">
+          <Skeleton className="h-[50px] w-full rounded mb-3" />
+          <Skeleton className="h-[40px] w-[200px] rounded" />
+          <Skeleton className="h-[calc(100vh-200px)] w-full rounded-lg" />
         </div>
       )}
       {document && (
-        <div>
-          <header className=" p-4 pl-8 pt-5 flex justify-between items-center">
-            <h1 className="text-3xl font-bold dark:text-white">{document.title}</h1>
+        <div className="flex flex-col h-full">
+          <header className="p-4 flex justify-between items-center border-b">
+            <h1 className="text-2xl font-bold dark:text-white truncate">{document.title}</h1>
             <DeleteDocumentButton documentId={document._id} />
           </header>
-          <main className="flex-grow flex flex-col overflow-hidden p-6 ml-4">
+          <main className="flex-grow overflow-hidden p-4">
             <Tabs defaultValue="document" className="w-full h-full">
-              <TabsList>
-                <TabsTrigger value="document">Document</TabsTrigger>
-                <TabsTrigger value="chat">Chat</TabsTrigger>
+              <TabsList className="mb-4">
+                <TabsTrigger className="max-sm:text-md" value="document">Document</TabsTrigger>
+                <TabsTrigger className="max-sm:text-md" value="chat">Chat</TabsTrigger>
               </TabsList>
-              <TabsContent
-                value="document"
-                className="h-[calc(100vh-310px)] overflow-hidden"
-              >
-                <div className="dark:bg-gray-800  p-4 rounded-lg h-full overflow-auto">
+              <TabsContent value="document" className="max-sm:h-[calc(100vh-320px)] h-[calc(100vh-250px)]">
+                <div className="dark:bg-gray-800 p-4 rounded-lg h-full overflow-auto">
                   {document.documentUrl && (
                     <iframe
                       className="w-full h-full"
@@ -60,7 +50,7 @@ const Page = ({
                   )}
                 </div>
               </TabsContent>
-              <TabsContent value="chat" className="h-[calc(100vh-310px)] overflow-auto">
+              <TabsContent value="chat" className="h-[calc(100vh-200px)]">
                 <ChatPanel documentId={document._id} />
               </TabsContent>
             </Tabs>

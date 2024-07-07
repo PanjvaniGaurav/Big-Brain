@@ -39,7 +39,7 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full flex gap-3"
+          className="w-full flex flex-col sm:flex-row gap-3"
         >
           <FormField
             name="text"
@@ -59,6 +59,7 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
           <LoadingButton
             isLoading={form.formState.isSubmitting}
             loadingText="Submitting..."
+            className="w-full sm:w-auto"
           >
             Submit
           </LoadingButton>

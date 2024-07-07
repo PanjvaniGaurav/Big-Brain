@@ -56,7 +56,7 @@ export default function SearchPage() {
   }, []);
 
   return (
-    <main className="w-full space-y-8">
+    <main className="w-full space-y-8 p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Search</h1>
       </div>

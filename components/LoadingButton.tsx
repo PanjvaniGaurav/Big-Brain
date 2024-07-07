@@ -7,31 +7,35 @@ const LoadingButton = ({
   children,
   loadingText,
   onClick,
+  className,
+  ...props
 }: {
   isLoading: boolean;
   children: React.ReactNode;
   loadingText: string;
   onClick?: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
+  className?: string;
+  [key: string]: any;
 }) => {
   return (
-    <div>
-      <Button
-        type="submit"
-        disabled={isLoading}
-        onClick={(e) => {
-          onClick?.(e);
-        }}
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="animate-spin mr-2" />
-            {loadingText}
-          </>
-        ) : (
-          <>{children}</>
-        )}
-      </Button>
-    </div>
+    <Button
+      type="submit"
+      disabled={isLoading}
+      onClick={(e) => {
+        onClick?.(e);
+      }}
+      className={`flex items-center justify-center ${className}`}
+      {...props}
+    >
+      {isLoading ? (
+        <>
+          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+          <span className="truncate">{loadingText}</span>
+        </>
+      ) : (
+        children
+      )}
+    </Button>
   );
 };
 
