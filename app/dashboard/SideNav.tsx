@@ -14,9 +14,9 @@ export default function SideNav() {
         <li>
           <Link
             className={cn(
-              "font-light flex gap-2 items-center text-xl hover:text-blue-100",
+              "font-light flex gap-2 items-center text-xl hover:text-blue-400 dark:hover:text-blue-100",
               {
-                "text-blue-300": pathname.includes("/search"),
+                "text-sky-400": pathname.includes("/search"),
               }
             )}
             href="/dashboard/search"
@@ -28,9 +28,9 @@ export default function SideNav() {
         <li>
           <Link
             className={cn(
-              "font-light flex gap-2 items-center text-xl hover:text-blue-100",
+              "font-light flex gap-2 items-center text-xl hover:text-blue-400 dark:hover:text-blue-100",
               {
-                "text-blue-300": pathname.includes("/documents"),
+                "text-sky-400": pathname.includes("/documents"),
               }
             )}
             href="/dashboard/documents"
@@ -43,9 +43,9 @@ export default function SideNav() {
         <li>
           <Link
             className={cn(
-              "font-light flex gap-2 items-center text-xl hover:text-blue-100",
+              "font-light flex gap-2 items-center text-xl hover:text-blue-400 dark:hover:text-blue-100",
               {
-                "text-blue-300": pathname.includes("/notes"),
+                "text-sky-400": pathname.includes("/notes"),
               }
             )}
             href="/dashboard/notes"

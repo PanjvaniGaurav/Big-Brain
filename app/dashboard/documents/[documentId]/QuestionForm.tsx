@@ -35,7 +35,7 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
   }
 
   return (
-    <div className="w-full px-2 py-2 bg-gray-900">
+    <div className="w-full px-2 py-2 dark:bg-gray-900">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

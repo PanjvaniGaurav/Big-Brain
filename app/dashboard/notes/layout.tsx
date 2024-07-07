@@ -41,7 +41,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
       )}
 
       {notes?.length === 0 && (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex p-20 flex-col justify-center gap-3 items-center">
           <Image
             src="/image.svg"
             width="200"
@@ -59,8 +59,8 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
             {notes?.map((note) => (
               <li
                 key={note._id}
-                className={cn("text-bold hover:text-slate-300", {
-                  "text-blue-200": note._id === noteId,
+                className={cn("text-bold hover:text-stone-400 dark:hover:text-slate-300", {
+                  "dark:text-blue-200 text-blue-500": note._id === noteId,
                 })}
               >
                 <Link href={`/dashboard/notes/${note._id}`}>

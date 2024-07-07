@@ -10,9 +10,9 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
   const chats = useQuery(api.chats.getChatForDocument, { documentId });
 
   return (
-    <div className="w-full flex flex-col gap-2 p-4 h-[calc(100vh-320px)] bg-gray-900 rounded-lg mb-2 relative overflow-hidden">
-      <div className="overflow-auto flex-1 space-y-4 pb-14"> {/* Add pb-20 for padding bottom */}
-        <div className="bg-slate-950 rounded p-3 text-gray-300">
+    <div className="w-full flex flex-col gap-2 p-4 h-[calc(100vh-320px)] bg-slate-200 dark:bg-gray-900 rounded-lg mb-2 relative overflow-hidden">
+      <div className="overflow-auto flex-1 space-y-4 pb-14"> 
+        <div className="dark:bg-slate-950 bg-slate-300 rounded p-3 dark:text-gray-300">
           AI: Ask any question about the document below
         </div>
         {chats?.map((chat, index) => (
@@ -21,8 +21,8 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
             className={cn(
               "rounded p-3",
               chat.isHuman
-                ? "bg-slate-800 text-white ml-auto max-w-[80%]"
-                : "bg-gray-950 text-gray-200 mr-auto max-w-[80%]"
+                ? "dark:bg-slate-800 bg-gray-300 ml-auto max-w-[80%]"
+                : "dark:bg-gray-950 bg-slate-300 mr-auto max-w-[80%]"
             )}
           >
             <div className="font-semibold mb-1">
@@ -36,7 +36,7 @@ const ChatPanel = ({ documentId }: { documentId: Id<"documents"> }) => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 bg-gray-900 px-2"> {/* Change -bottom-9 to bottom-0 */}
+      <div className="absolute bottom-0 left-0 right-0 dark:bg-gray-900 px-2"> {/* Change -bottom-9 to bottom-0 */}
         <QuestionForm documentId={documentId} />
       </div>
     </div>

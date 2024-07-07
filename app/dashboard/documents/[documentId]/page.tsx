@@ -31,14 +31,14 @@ const Page = ({
             <Skeleton className="h-[40px] w-[100px] rounded" />
           </div>
           <div className="ml-4">
-            <Skeleton className="h-[200px] w-full rounded-lg" />
+            <Skeleton className="h-[400px] w-full rounded-lg" />
           </div>
         </div>
       )}
       {document && (
         <div>
           <header className=" p-4 pl-8 pt-5 flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-white">{document.title}</h1>
+            <h1 className="text-3xl font-bold dark:text-white">{document.title}</h1>
             <DeleteDocumentButton documentId={document._id} />
           </header>
           <main className="flex-grow flex flex-col overflow-hidden p-6 ml-4">
@@ -51,7 +51,7 @@ const Page = ({
                 value="document"
                 className="h-[calc(100vh-310px)] overflow-hidden"
               >
-                <div className="bg-gray-800 p-4 rounded-lg h-full overflow-auto">
+                <div className="dark:bg-gray-800  p-4 rounded-lg h-full overflow-auto">
                   {document.documentUrl && (
                     <iframe
                       className="w-full h-full"
