@@ -16,10 +16,10 @@ const Page = () => {
   }
 
   return (
-    <div className="dark:bg-slate-700 border w-full p-4 min-h-[400px] text-lg rounded-md">
+    <div className="dark:bg-slate-700 border w-full p-2 sm:p-4 sm:max-h-[calc(100vh-500px)] max-sm:min-h-[calc(100vh-360px)] min-h-[calc(100vh-190px)] text-base sm:text-lg rounded-md">
       <div className="sticky top-0 dark:bg-slate-700 z-10">
-        <div className="flex justify-between">
-          <h2 className="text-xl font-bold italic mb-2 mt-1">{note.title}</h2>
+        <div className="flex sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
+          <h2 className="text-lg sm:text-xl font-bold italic mb-2 mt-1">{note.title}</h2>
           <DeleteNoteButton noteId={noteId} />
         </div>
         <Separator className="my-1" />

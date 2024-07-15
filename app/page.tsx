@@ -1,18 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { SignInButton } from "@clerk/nextjs";
-import { Authenticated, Unauthenticated } from "convex/react";
 import { redirect } from "next/navigation";
 import { useUser } from "@clerk/clerk-react";
 
-
 export default function LandingPage() {
-  const {isSignedIn} = useUser();
+  const { isSignedIn } = useUser();
   return (
     <div className="bg-slate-200 dark:bg-slate-900 h-full overflow-hidden">
-        {
-          isSignedIn && redirect("/dashboard")
-        }
+      {isSignedIn && redirect("/dashboard")}
       <>
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
@@ -33,8 +29,8 @@ export default function LandingPage() {
                 Take Control of your Team Documentation
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-200">
-                BigBrain acts as your team's second brain, storing all your docs
-                and allowing easy vector search.
+                BigBrain acts as your team&apos;s second brain, storing all your
+                docs and allowing easy vector search.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <SignInButton forceRedirectUrl={`/dashboard`}>

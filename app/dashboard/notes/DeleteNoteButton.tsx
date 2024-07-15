@@ -31,7 +31,7 @@ const DeleteNoteButton = ({ noteId }: { noteId: Id<"notes"> }) => {
           <Button
             size="icon"
             variant="destructive"
-            className="absolute -top-2 right-0"
+            className=""
           >
             <TrashIcon /> 
           </Button>

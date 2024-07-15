@@ -20,7 +20,7 @@ const Page = ({
   });
 
   return (
-    <div className="flex flex-col w-full sm:h-full lg:h-[calc(100vh-90px)] overflow-hidden">
+    <div className="flex flex-col w-full sm:h-full max-sm:h-[calc(100vh-150px)] lg:h-[calc(100vh-90px)] overflow-hidden">
       {!document && (
         <div className="p-4 flex flex-col gap-3">
           <Skeleton className="h-[50px] w-full rounded mb-3" />
