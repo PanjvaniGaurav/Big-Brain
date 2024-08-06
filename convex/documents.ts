@@ -191,8 +191,8 @@ export const generateDocumentDescription = internalAction({
 export const updateDocumentDescription = internalMutation({
   args: {
     documentId: v.id("documents"),
-    description: v.string(),
-    embedding: v.array(v.float64()),
+      description: v.string(),
+      embedding: v.array(v.float64()),
   },
   async handler(ctx, args) {
     await ctx.db.patch(args.documentId, {

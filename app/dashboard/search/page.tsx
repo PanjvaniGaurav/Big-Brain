@@ -22,7 +22,7 @@ function SearchResult({
 }) {
   return (
     <Link href={link} key={key}>
-      <li className="hover:bg-slate-700 bg-slate-800 rounded p-4 whitespace-pre-line">
+      <li className="dark:hover:bg-slate-700 hover:bg-slate-300 bg-slate-200 dark:bg-slate-800 rounded p-4 whitespace-pre-line">
         <div className="flex justify-between mb-2">
           <div className="text-xl font-medium italic">
             {type === "notes" ? (
@@ -37,7 +37,7 @@ function SearchResult({
               </div>
             )}
           </div>
-          <div className="text-sm font-thin">Relevancy: {score.toFixed(2)}</div>
+          <div className="text-sm dark:font-thin">Relevancy: {score.toFixed(2)}</div>
         </div>
         <div className="text-lg">{text.substring(0,150)+"..."}</div>
       </li>
@@ -56,7 +56,7 @@ export default function SearchPage() {
   }, []);
 
   return (
-    <main className="w-full space-y-8">
+    <main className="w-full space-y-8 p-4 overflow-auto max-sm:max-h-[calc(100vh-160px)] max-lg:max-h-[calc(100vh-90px)]">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Search</h1>
       </div>

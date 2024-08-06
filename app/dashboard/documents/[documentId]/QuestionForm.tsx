@@ -35,11 +35,11 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
   }
 
   return (
-    <div className="w-full px-2 py-2 bg-gray-900">
+    <div className="w-full px-2 py-2 dark:bg-gray-900">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full flex gap-3"
+          className="w-full flex flex-col sm:flex-row gap-3"
         >
           <FormField
             name="text"
@@ -59,6 +59,7 @@ const QuestionForm = ({ documentId }: { documentId: Id<"documents"> }) => {
           <LoadingButton
             isLoading={form.formState.isSubmitting}
             loadingText="Submitting..."
+            className="w-full sm:w-auto"
           >
             Submit
           </LoadingButton>
