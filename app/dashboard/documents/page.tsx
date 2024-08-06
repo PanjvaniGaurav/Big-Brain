@@ -16,7 +16,7 @@ export default function Home() {
   });
 
   return (
-    <div className="w-full space-y-8 sm:pt-2 lg:p-4 xl:p-6 overflow-hidden">
+    <div className="w-full space-y-8 sm:pt-2 lg:p-4 xl:p-6 overflow-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <h1 className="text-3xl md:text-4xl font-bold">My Documents</h1>
         <UploadDocumentButton />
