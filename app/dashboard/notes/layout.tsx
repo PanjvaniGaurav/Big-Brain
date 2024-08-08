@@ -28,7 +28,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
 
       {!notes && (
         <div>
-          <div className="flex  max-sm:hidden gap-20">
+          <div className="flex max-sm:hidden gap-20">
             <div className="w-[200px] space-y-4">
               <Skeleton className="h-[20px] w-full" />
               <Skeleton className="h-[20px] w-full" />
@@ -42,7 +42,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
               <Skeleton className="h-[400px] w-full" />
             </div>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col md:hidden">
             <div className="w-[50%px] space-y-4">
               <Skeleton className="h-[20px] w-full" />
               <Skeleton className="h-[20px] w-full" />
