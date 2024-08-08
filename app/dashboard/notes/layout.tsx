@@ -51,7 +51,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
               <Skeleton className="h-[20px] w-full" />
               <Skeleton className="h-[20px] w-full" />
             </div>
-            <div className="">
+            <div className="mt-4">
               <Skeleton className="h-[400px] w-full" />
             </div>
           </div>
@@ -84,7 +84,7 @@ const NotesLayout = ({ children }: { children: ReactNode }) => {
                   }
                 )}
               >
-                <Link href={`/dashboard/notes/${note._id}`}>
+                <Link className="" href={`/dashboard/notes/${note._id}`}>
                   {isMobile
                     ? note.title.substring(0, 15) + "..."
                     : note.title.substring(0, 20) + "..."}
